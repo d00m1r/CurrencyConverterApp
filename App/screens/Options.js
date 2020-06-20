@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import colors from "../constants/colors";
+import { RowItem } from "../components/RowItem";
 
 const styles = StyleSheet.create({
   row: {
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-},
+  },
   text: {
     fontSize: 16,
     color: colors.text,
@@ -31,24 +32,26 @@ const styles = StyleSheet.create({
 export default () => {
   return (
     <SafeAreaView>
-      <TouchableOpacity style={styles.row}>
-        <Text style={styles.text}>Themes</Text>
-        <Entypo name="chevron-right" size={20} color={colors.blue} />
-      </TouchableOpacity>
+      <RowItem
+        Press={() => alert("to do!")}
+        text="Themes"
+        icon={<Entypo name="chevron-right" size={20} color={colors.blue} />}
+      />
 
       <View style={styles.separator} />
 
-      <TouchableOpacity style={styles.row}>
-        <Text style={styles.text}>Description</Text>
-        <Entypo name="chevron-right" size={20} color={colors.blue} />
-      </TouchableOpacity>
-
+      <RowItem
+        Press={() => alert("to do!")}
+        text="Description"
+        icon={<Entypo name="chevron-right" size={20} color={colors.blue} />}
+      />
       <View style={styles.separator} />
 
-      <TouchableOpacity style={styles.row}>
-        <Text style={styles.text}>Samples</Text>
-        <Entypo name="export" size={20} color={colors.blue} />
-      </TouchableOpacity>
+      <RowItem
+        Press={() => alert("to do!")}
+        text="Samples"
+        icon={<Entypo name="export" size={20} color={colors.blue} />}
+      />
     </SafeAreaView>
   );
 };
