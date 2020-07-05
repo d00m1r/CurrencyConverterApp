@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   Text,
+  ScrollView,
 } from "react-native";
 //import Options from "Options";
 import colors from "../constants/colors";
@@ -55,43 +56,49 @@ export default () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.blue} />
-      <View style={styles.logoContainer}>
-        <Image
-          source={require("../assets/images/background.png")}
-          style={styles.logoBackground}
-          resizeMode="contain"
+      <ScrollView>
+        <StatusBar barStyle="dark-content" backgroundColor={colors.blue} />
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../assets/images/background.png")}
+            style={styles.logoBackground}
+            resizeMode="contain"
+          />
+          <Image
+            source={require("../assets/images/logo.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        </View>
+
+        <Text style={styles.textHeader}>Currency Converter</Text>
+        <ConversionInput
+          text={baseCurrency}
+          value="123"
+          onButtonPress={() => alert("to do!")}
+          editable={false}
         />
-        <Image
-          source={require("../assets/images/logo.png")}
-          style={styles.logo}
-          resizeMode="contain"
+
+        <ConversionInput
+          text={quoteCurrency}
+          value="123"
+          onButtonPress={() => alert("to!")}
+          onChangeText={(text) => console.log("text", text)}
+          keyboardType="numeric"
         />
-      </View>
+        <Text style={styles.text}>
+          {`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${format(
+            date,
+            "MMMM do, yyyy"
+          )}.`}
+        </Text>
 
-      <Text style={styles.textHeader}>Currency Converter</Text>
-      <ConversionInput
-        text={baseCurrency}
-        value="123"
-        onButtonPress={() => alert("to do!")}
-        editable={false}
-      />
-
-      <ConversionInput
-        text={quoteCurrency}
-        value="123"
-        onButtonPress={() => alert("to!")}
-        onChangeText={(text) => console.log("text", text)}
-        keyboardType="numeric"
-      />
-      <Text style={styles.text}>
-        {`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${format(
-          date,
-          "MMMM do, yyyy"
-        )}.`}
-      </Text>
-
-      <Button text="Reverse Currencies" onButtonPress={() => alert("to do!")} />
+        <Button
+          text="Reverse Currencies"
+          onButtonPress={() => alert("to do!")}
+        />
+        <View style={{height: screen.height/2.5}}/>
+      </ScrollView>
     </View>
   );
 };
