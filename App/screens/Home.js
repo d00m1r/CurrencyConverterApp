@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   Dimensions,
   Text,
   ScrollView,
+  Keyboard,
 } from "react-native";
 //import Options from "Options";
 import colors from "../constants/colors";
@@ -54,9 +55,25 @@ export default () => {
   const conversionRate = 0.8345;
   const date = new Date();
 
+  const [scrollEnabledOrNot, setScrollEnabled] = useState(false);
+
+  useEffect(() => {
+    const showListener = Keyboard.addListener("keyboardDidShow", () => {
+      setScrollEnabled(true);
+    });
+
+    const hideListener = Keyboard.addListener("keyboardDidHide", () => {
+      setScrollEnabled(false);
+    });
+    return () => {
+      showListener.remove();
+      hideListener.remove();
+    };
+  }, []); //[] run useEffect fun only when app 1 loops
+
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView scrollEnabled={scrollEnabledOrNot}>
         <StatusBar barStyle="dark-content" backgroundColor={colors.blue} />
         <View style={styles.logoContainer}>
           <Image
@@ -97,7 +114,7 @@ export default () => {
           text="Reverse Currencies"
           onButtonPress={() => alert("to do!")}
         />
-        <View style={{height: screen.height/2.5}}/>
+        <View style={{ height: screen.height / 2.5 }} />
       </ScrollView>
     </View>
   );
