@@ -11,15 +11,21 @@ import colors from "../constants/colors";
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    marginVertical: 15,
+    marginVertical: 5,
     marginHorizontal: 30,
-    borderRadius: 7,
+    borderRadius: 10,
     flexDirection: "row",
   },
+  containerDisabled: {
+    backgroundColor: colors.offWhite,
+  },
   button: {
+    backgroundColor: colors.white,
     padding: 15,
     borderColor: colors.border,
     borderWidth: 1,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   buttonText: {
     fontSize: 18,
@@ -34,8 +40,13 @@ const styles = StyleSheet.create({
 });
 
 export const ConversionInput = ({ text, onButtonPress, ...props }) => {
+  const containerStyles = [styles.container];
+  if (props.editable === false) {
+    containerStyles.push(styles.containerDisabled);
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyles}>
       <TouchableOpacity onPress={onButtonPress} style={styles.button}>
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
