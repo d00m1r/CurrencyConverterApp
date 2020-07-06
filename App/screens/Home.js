@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,13 +7,13 @@ import {
   Dimensions,
   Text,
   ScrollView,
-  Keyboard,
 } from "react-native";
 //import Options from "Options";
 import colors from "../constants/colors";
-import { ConversionInput } from "../components/ConversionInput";
-import { format } from "date-fns";
-import { Button } from "../components/Button";
+import ConversionInput from "../components/ConversionInput";
+import format from "date-fns";
+import Button from "../components/Button";
+import KeyboardSpacer from "../components/KeyboardSpacer";
 
 const screen = Dimensions.get("window");
 
@@ -57,20 +57,6 @@ export default () => {
 
   const [scrollEnabledOrNot, setScrollEnabled] = useState(false);
 
-  useEffect(() => {
-    const showListener = Keyboard.addListener("keyboardDidShow", () => {
-      setScrollEnabled(true);
-    });
-
-    const hideListener = Keyboard.addListener("keyboardDidHide", () => {
-      setScrollEnabled(false);
-    });
-    return () => {
-      showListener.remove();
-      hideListener.remove();
-    };
-  }, []); //[] run useEffect fun only when app 1 loops
-
   return (
     <View style={styles.container}>
       <ScrollView scrollEnabled={scrollEnabledOrNot}>
@@ -104,17 +90,20 @@ export default () => {
           keyboardType="numeric"
         />
         <Text style={styles.text}>
-          {`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${format(
-            date,
-            "MMMM do, yyyy"
-          )}.`}
+          {`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${format(date,
+            "MMM do, yyyy"
+          )}`}
         </Text>
 
         <Button
           text="Reverse Currencies"
           onButtonPress={() => alert("to do!")}
         />
-        <View style={{ height: screen.height / 2.5 }} />
+        <KeyboardSpacer
+          onToggle={(keyboardIsVisisble) =>
+            setScrollEnabled(keyboardIsVisisble)
+          }
+        />
       </ScrollView>
     </View>
   );
